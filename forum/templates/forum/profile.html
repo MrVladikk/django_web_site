@@ -1,0 +1,12 @@
+{% extends "forum/base.html" %} {% block title %} Профиль {% endblock title %}
+{% block content %}
+<div class="container">
+  <h1>Профиль пользователя</h1>
+  <p><strong>Имя пользователя:</strong> {{ user.username }}</p>
+  <p><strong>Email:</strong> {{ user.email }}</p>
+  <p><strong>Дата регистрации:</strong> {{ user.date_joined }}</p>
+  <p><strong>Последний вход:</strong> {{ user.last_login }}</p>
+
+  <a href="{% url 'forum:index' %}" class="btn btn-danger">Выйти</a>
+</div>
+{% endblock content %}

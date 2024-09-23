@@ -1,0 +1,115 @@
+{% extends "forum/base.html" %} {% block title %}Новости{% endblock title %}
+{%block content %}
+<header>
+  <div class="logo">
+    <h1>Новости</h1>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="#">Главная</a></li>
+      <li><a href="#">Политика</a></li>
+      <li><a href="#">Экономика</a></li>
+      <li><a href="#">Спорт</a></li>
+      <li><a href="#">Контакты</a></li>
+      <li>
+        <button
+          type="button"
+          class="btn btn-success"
+          data-bs-toggle="modal"
+          data-bs-target="#loginModal"
+        >
+          Войти
+        </button>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="main-content">
+    {% for post in posts %}
+    <div class="news-post">
+      <h2>{{ post.title }}</h2>
+      <p class="date">{{ post.pub_date }}</p>
+      <p>{{ post.text }}</p>
+      <p class="author">Автор: {{ post.author }}</p>
+      <p class="likes">Лайков: {{ post.likes }}</p>
+      <div class="comments-section">
+        <h3>Комментарии:</h3>
+        {% if post.comments %}
+        <p>{{ post.comments|linebreaks }}</p>
+        <!-- Вывод комментариев -->
+        {% else %}
+        <p>Комментариев нет</p>
+        <!-- Сообщение, если комментарии отсутствуют -->
+        {% endif %}
+      </div>
+    </div>
+    {% empty %}
+    <p>Новостей пока нет.</p>
+    {% endfor %}
+  </div>
+
+  <div
+    class="modal fade"
+    id="loginModal"
+    tabindex="-1"
+    aria-labelledby="loginModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Войти</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form method="post" action="{% url 'forum:profile' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="login" class="form-label">Имя пользователя</label>
+              <input
+                type="text"
+                class="form-control"
+                id="login"
+                name="login"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Пароль</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Войти</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <h3>Последние новости</h3>
+    <ul>
+      <li><a href="#">Заголовок новости 1</a></li>
+      <li><a href="#">Заголовок новости 2</a></li>
+      <li><a href="#">Заголовок новости 3</a></li>
+      <li><a href="#">Заголовок новости 4</a></li>
+    </ul>
+  </aside>
+</div>
+
+<footer>
+  <p>&copy; 2024 Новости. Все права защищены.</p>
+</footer>
+{%endblock content%}

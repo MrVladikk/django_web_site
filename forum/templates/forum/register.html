@@ -1,0 +1,29 @@
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}"/>
+        <script type="text/javascript" src="{% static "js/bootstrap.bundle.min.js" %}" ></script>
+        <title>{% block title %}Watcher - регистрация::вход{% endblock title %}</title>
+    </head>
+    <body>
+        <div class="container-fluid text-center">
+            <div class="col-4">
+                <form method="post" action="{% url 'forum:profile' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="login" class="form-label">логин</label>
+                        <input id="login" type="text" class="form-control" value="{{login}}" name="login" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">пароль</label>
+                        <input type="password" class="form-control" name="password" id="password">
+                    </div>
+                    {% if error_message %}
+                    <p><small>{{error_message}}</small></p>
+                    {% endif %}
+                    <button type="submit" class="btn btn-dark">отправить</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
